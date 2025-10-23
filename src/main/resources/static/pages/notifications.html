@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Notifications</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header><h1>Notifications</h1></header>
+<main class="grid">
+    <div class="card">
+        <h3>Create Notification</h3>
+        <div class="grid">
+            <input class="input" id="userId" placeholder="User ID">
+            <input class="input" id="message" placeholder="Message">
+            <button class="btn" onclick="createNotif()">Send</button>
+        </div>
+    </div>
+    <div class="card">
+        <h3>User Notifications</h3>
+        <div class="grid">
+            <input class="input" id="userId2" placeholder="User ID">
+            <button class="btn" onclick="loadNotifs()">Load</button>
+        </div>
+        <pre id="notifs"></pre>
+    </div>
+</main>
+<script>
+    async function createNotif(){
+        const userId = +document.getElementById('userId').value;
+        const message = document.getElementById('message').value;
+        const r = await fetch('/api/notifications',{method:'POST', headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({userId, message})});
+        alert(r.ok ? 'Sent' : 'Error: ' + (await r.text()));
+    }
+    async function loadNotifs(){
+        const userId = +document.getElementById('userId2').value;
+        const r = await fetch('/api/notifications/user/' + userId);
+        document.getElementById('notifs').textContent = JSON.stringify(await r.json(), null, 2);
+    }
+</script>
+</body>
+</html>
