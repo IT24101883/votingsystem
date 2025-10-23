@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Results</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header><h1>Results & Analytics</h1></header>
+<main class="grid">
+    <div class="card">
+        <h3>Standings</h3>
+        <button class="btn" onclick="loadStandings()">Load Standings</button>
+        <pre id="standings"></pre>
+    </div>
+    <div class="card">
+        <h3>Winners</h3>
+        <button class="btn" onclick="loadWinners()">Load Winners</button>
+        <pre id="winners"></pre>
+    </div>
+</main>
+<script>
+    async function loadStandings(){
+        const r = await fetch('/api/results/standings');
+        document.getElementById('standings').textContent = JSON.stringify(await r.json(), null, 2);
+    }
+    async function loadWinners(){
+        const r = await fetch('/api/results/winners');
+        document.getElementById('winners').textContent = JSON.stringify(await r.json(), null, 2);
+    }
+</script>
+</body>
+</html>
