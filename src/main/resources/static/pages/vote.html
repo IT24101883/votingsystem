@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vote</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header><h1>Vote</h1></header>
+<main>
+    <div class="card">
+        <p>Cast a vote for a nomination (IDs).</p>
+        <div class="grid">
+            <input class="input" id="voterId" placeholder="Your User ID">
+            <input class="input" id="nominationId" placeholder="Nomination ID">
+            <button class="btn" onclick="castVote()">Vote</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>My Votes</h3>
+        <div class="grid">
+            <input class="input" id="voterId2" placeholder="Your User ID">
+            <button class="btn" onclick="loadMyVotes()">Load</button>
+        </div>
+        <pre id="myVotes"></pre>
+    </div>
+</main>
+<script>
+    async function castVote(){
+        const voterId = +document.getElementById('voterId').value;
+        const nominationId = +document.getElementById('nominationId').value;
+        const r = await fetch('/api/votes',{method:'POST', headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({voterId, nominationId})});
+        alert(r.ok ? 'Voted!' : 'Error: ' + (await r.text()));
+    }
+    async function loadMyVotes(){
+        const voterId = +document.getElementById('voterId2').value;
+        const r = await fetch('/api/votes/voter/' + voterId);
+        document.getElementById('myVotes').textContent = JSON.stringify(await r.json(), null, 2);
+    }
+</script>
+</body>
+</html>

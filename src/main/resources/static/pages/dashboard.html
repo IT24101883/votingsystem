@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header><h1>Dashboard</h1></header>
+<main>
+    <div class="grid">
+        <div class="card">
+            <h3>Users</h3>
+            <button class="btn" onclick="loadUsers()">Load Users</button>
+            <pre id="users"></pre>
+        </div>
+
+        <div class="card">
+            <h3>Categories</h3>
+            <button class="btn" onclick="loadCategories()">Load Categories</button>
+            <pre id="categories"></pre>
+        </div>
+
+        <div class="card">
+            <h3>Nominations</h3>
+            <button class="btn" onclick="loadNominations()">Load Nominations</button>
+            <pre id="nominations"></pre>
+        </div>
+    </div>
+</main>
+<script>
+    async function loadUsers(){
+        const r = await fetch('/api/users'); document.getElementById('users').textContent = JSON.stringify(await r.json(), null, 2);
+    }
+    async function loadCategories(){
+        const r = await fetch('/api/categories'); document.getElementById('categories').textContent = JSON.stringify(await r.json(), null, 2);
+    }
+    async function loadNominations(){
+        const r = await fetch('/api/nominations'); document.getElementById('nominations').textContent = JSON.stringify(await r.json(), null, 2);
+    }
+</script>
+</body>
+</html>

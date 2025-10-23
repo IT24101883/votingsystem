@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login (Mock)</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header><h1>Login</h1></header>
+<main>
+    <div class="card">
+        <p>For demo purposes, create a user via API then "pretend" to login.</p>
+        <form id="loginForm" class="grid" onsubmit="return false;">
+            <input class="input" name="email" placeholder="Email">
+            <input class="input" name="password" placeholder="Password" type="password">
+            <button class="btn" onclick="mockLogin()">Login</button>
+        </form>
+    </div>
+</main>
+<script>
+    function mockLogin(){
+        const email = document.querySelector('[name=email]').value;
+        localStorage.setItem('email', email);
+        alert('Logged in as: ' + email);
+        location.href='/pages/dashboard.html';
+    }
+</script>
+</body>
+</html>
